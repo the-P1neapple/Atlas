@@ -9,4 +9,8 @@ $env:path = $env:path + ";" + $([Runtime.InteropServices.RuntimeEnvironment]::Ge
 
 # run these tasks in the background to make sure that it is all ngened
 & schtasks.exe /Run /TN "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319"
-& schtasks.exe /Run /TN "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319 64"
+if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') {
+    & schtasks.exe /Run /TN "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319 Arm64"
+} else {
+    & schtasks.exe /Run /TN "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319 64"
+}
